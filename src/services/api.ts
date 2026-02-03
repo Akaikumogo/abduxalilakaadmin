@@ -1,8 +1,10 @@
 import axios from 'axios';
 import type { AuthResponse, Application, PaginatedResponse, Stats } from '@/types';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
-export const API_BASE = API_URL.replace('/api', '');
+// .env (VITE_API_URL) yo'q bo'lsa fallback: https://aa.akaikumogo.uz (SSL)
+const FALLBACK_API_ORIGIN = 'https://aa.akaikumogo.uz';
+const API_URL = import.meta.env.VITE_API_URL || `${FALLBACK_API_ORIGIN}/api`;
+export const API_BASE = API_URL.replace(/\/api\/?$/, '') || FALLBACK_API_ORIGIN;
 
 export const api = axios.create({
   baseURL: API_URL,
