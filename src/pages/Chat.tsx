@@ -208,7 +208,7 @@ export function Chat() {
       chatApi.sendReply(odId, message),
     onSuccess: () => {
       setNewMessage('');
-      refetchHistory();
+      queryClient.invalidateQueries({ queryKey: ['chat-history'] });
       queryClient.invalidateQueries({ queryKey: ['chat-conversations'] });
     },
     onError: () => {
