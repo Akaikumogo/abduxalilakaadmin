@@ -14,11 +14,12 @@
     "framer-motion": "^10.18.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1",
     "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^6.21.1",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@types/node": "^25.2.0",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^4.2.1",

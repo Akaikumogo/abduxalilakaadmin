@@ -2,8 +2,8 @@ import { useState, useRef, memo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { heroApi, getImageUrl, type HeroSettings as HeroSettingsType } from '@/services/api';
-import { Card, ConfirmDialog } from '@/components/ui';
+import { heroApi, getImageUrl } from '@/services/api';
+import { ConfirmDialog } from '@/components/ui';
 import { PageLoading } from '@/components/ui/Loading';
 
 interface ImageUploadCardProps {

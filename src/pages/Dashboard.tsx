@@ -14,25 +14,6 @@ const statusConfig: Record<string, { label: string; color: string; bg: string }>
   cancelled: { label: 'Bekor qilindi', color: 'text-accent-700', bg: 'bg-accent-100' },
 };
 
-// Mini chart component
-const MiniChart = memo(function MiniChart({ data, color }: { data: number[]; color: string }) {
-  const max = Math.max(...data, 1);
-  
-  return (
-    <div className="flex items-end gap-1 h-12">
-      {data.map((value, i) => (
-        <motion.div
-          key={i}
-          initial={{ height: 0 }}
-          animate={{ height: `${(value / max) * 100}%` }}
-          transition={{ duration: 0.5, delay: i * 0.05 }}
-          className={`flex-1 ${color} rounded-t min-h-[4px]`}
-        />
-      ))}
-    </div>
-  );
-});
-
 // Status distribution bar
 const StatusBar = memo(function StatusBar({ 
   stats 

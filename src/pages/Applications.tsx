@@ -1,10 +1,10 @@
-import { useState, useCallback, memo, useMemo } from 'react';
+import { useState, useCallback, memo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { applicationsApi } from '@/services/api';
 import { Modal, ConfirmDialog, Button, Card, EmptyState } from '@/components/ui';
-import { PageLoading, SkeletonTable } from '@/components/ui/Loading';
+import { SkeletonTable } from '@/components/ui/Loading';
 import type { Application } from '@/types';
 
 const statusConfig: Record<string, { label: string; color: string; bg: string }> = {

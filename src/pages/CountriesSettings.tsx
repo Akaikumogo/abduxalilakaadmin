@@ -59,16 +59,6 @@ export const CountriesSettings = memo(function CountriesSettings() {
     },
   });
 
-  const deleteImageMutation = useMutation({
-    mutationFn: ({ id, language }: { id: string; language: 'uz' | 'en' }) =>
-      countriesApi.deleteImage(id, language),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['countries'] });
-      toast.success(`${variables.language === 'uz' ? "O'zbekcha" : 'Inglizcha'} rasm o'chirildi`);
-    },
-    onError: () => toast.error("Rasmni o'chirishda xatolik"),
-  });
-
   const deleteMutation = useMutation({
     mutationFn: countriesApi.delete,
     onSuccess: () => {
