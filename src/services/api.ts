@@ -515,6 +515,29 @@ export interface ContactSettings {
   workingHoursEn: string;
 }
 
+export interface AboutSettings {
+  titleUz: string;
+  titleEn: string;
+  text1Uz: string;
+  text1En: string;
+  text2Uz: string;
+  text2En: string;
+  buttonTextUz: string;
+  buttonTextEn: string;
+}
+
+export const aboutApi = {
+  get: async (): Promise<AboutSettings> => {
+    const response = await api.get('/about');
+    return response.data.data;
+  },
+
+  update: async (settings: AboutSettings): Promise<AboutSettings> => {
+    const response = await api.put('/about', settings);
+    return response.data.data;
+  },
+};
+
 export const contactApi = {
   get: async (): Promise<ContactSettings> => {
     const response = await api.get('/contact');

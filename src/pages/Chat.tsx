@@ -195,7 +195,7 @@ export function Chat() {
   });
 
   // Fetch chat history
-  const { data: chatHistory, isLoading: historyLoading, refetch: refetchHistory } = useQuery({
+  const { data: chatHistory, isLoading: historyLoading } = useQuery({
     queryKey: ['chat-history', selectedUserId],
     queryFn: () => selectedUserId ? chatApi.getChatHistory(selectedUserId) : null,
     enabled: !!selectedUserId,

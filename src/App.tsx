@@ -11,6 +11,7 @@ const Login = lazy(() => import('@/pages/Login').then(m => ({ default: m.Login }
 const Dashboard = lazy(() => import('@/pages/Dashboard').then(m => ({ default: m.Dashboard })));
 const Applications = lazy(() => import('@/pages/Applications').then(m => ({ default: m.Applications })));
 const Chat = lazy(() => import('@/pages/Chat').then(m => ({ default: m.Chat })));
+const AboutSettings = lazy(() => import('@/pages/AboutSettings').then(m => ({ default: m.AboutSettings })));
 const HeroSettings = lazy(() => import('@/pages/HeroSettings').then(m => ({ default: m.HeroSettings })));
 const StatsSettings = lazy(() => import('@/pages/StatsSettings').then(m => ({ default: m.StatsSettings })));
 const FeaturesSettings = lazy(() => import('@/pages/FeaturesSettings').then(m => ({ default: m.FeaturesSettings })));
@@ -77,6 +78,7 @@ function AppRoutes() {
           <Route index element={<Dashboard />} />
           <Route path="applications" element={<Applications />} />
           <Route path="chat" element={<Chat />} />
+          <Route path="about" element={<AboutSettings />} />
           <Route path="hero" element={<HeroSettings />} />
           <Route path="stats" element={<StatsSettings />} />
           <Route path="features" element={<FeaturesSettings />} />
