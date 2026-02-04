@@ -276,7 +276,7 @@ export const Layout = memo(function Layout() {
               transition={{ type: 'spring', damping: 25 }}
               className="lg:hidden fixed inset-y-0 left-0 w-72 bg-white z-50 shadow-2xl"
             >
-              <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full">
                 <div className="p-4 border-b border-dark-100 flex items-center justify-between">
                   <h1 className="text-xl font-bold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">
                     Buran Admin
@@ -336,7 +336,7 @@ export const Layout = memo(function Layout() {
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className="hidden lg:flex fixed inset-y-0 left-0 bg-white border-r border-dark-100 z-30 flex-col"
       >
-        {/* Logo */}
+          {/* Logo */}
         <div className="p-4 border-b border-dark-100 flex items-center justify-between">
           <AnimatePresence mode="wait">
             {!isCollapsed ? (
@@ -377,28 +377,28 @@ export const Layout = memo(function Layout() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
             </motion.svg>
           </motion.button>
-        </div>
+          </div>
 
-        {/* Navigation */}
+          {/* Navigation */}
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto no-scrollbar">
-          {navItems.map((item) => (
+            {navItems.map((item) => (
             <NavItem
-              key={item.path}
+                key={item.path}
               item={item}
               isActive={location.pathname === item.path}
               isCollapsed={isCollapsed}
             />
-          ))}
-        </nav>
+            ))}
+          </nav>
 
-        {/* User section */}
+          {/* User section */}
         <div className="p-4 border-t border-dark-100">
           <div className={`flex items-center gap-3 ${isCollapsed ? 'justify-center' : 'mb-4'}`}>
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="avatar avatar-md shrink-0"
             >
-              {user?.name?.charAt(0) || 'A'}
+                {user?.name?.charAt(0) || 'A'}
             </motion.div>
             <AnimatePresence>
               {!isCollapsed && (
@@ -413,7 +413,7 @@ export const Layout = memo(function Layout() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+              </div>
           <AnimatePresence>
             {!isCollapsed && (
               <motion.button
@@ -421,13 +421,13 @@ export const Layout = memo(function Layout() {
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={handleLogout}
-                className="w-full btn-secondary text-sm"
-              >
+              onClick={handleLogout}
+              className="w-full btn-secondary text-sm"
+            >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
-                Chiqish
+              Chiqish
               </motion.button>
             )}
           </AnimatePresence>
@@ -450,7 +450,7 @@ export const Layout = memo(function Layout() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              <Outlet />
+        <Outlet />
             </motion.div>
           </AnimatePresence>
         </div>
