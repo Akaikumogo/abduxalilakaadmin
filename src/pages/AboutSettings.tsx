@@ -2,7 +2,7 @@ import { useState, useEffect, memo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { aboutApi, type AboutSettings as AboutSettingsType } from '@/services/api';
+import { aboutApi, aboutImagesApi, getImageUrl, type AboutSettings as AboutSettingsType, type AboutImageItem } from '@/services/api';
 import { Card, Button } from '@/components/ui';
 import { PageLoading } from '@/components/ui/Loading';
 
@@ -17,6 +17,11 @@ export const AboutSettings = memo(function AboutSettings() {
     text2En: '',
     buttonTextUz: '',
     buttonTextEn: '',
+  });
+
+  const { data: galleryImages = [], isLoading: isGalleryLoading } = useQuery({
+    queryKey: ['aboutImages'],
+    queryFn: aboutImagesApi.getAll,
   });
 
   const { data: settings, isLoading } = useQuery({
@@ -37,6 +42,24 @@ export const AboutSettings = memo(function AboutSettings() {
     onError: () => toast.error('Xatolik yuz berdi'),
   });
 
+  const uploadImageMutation = useMutation({
+    mutationFn: (file: File) => aboutImagesApi.upload(file),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['aboutImages'] });
+      toast.success('Rasm yuklandi');
+    },
+    onError: () => toast.error('Rasm yuklashda xatolik'),
+  });
+
+  const deleteImageMutation = useMutation({
+    mutationFn: (id: string) => aboutImagesApi.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['aboutImages'] });
+      toast.success("Rasm o'chirildi");
+    },
+    onError: () => toast.error("Rasmni o'chirishda xatolik"),
+  });
+
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.titleUz || !formData.text1Uz) {
@@ -46,7 +69,7 @@ export const AboutSettings = memo(function AboutSettings() {
     saveMutation.mutate(formData);
   }, [formData, saveMutation]);
 
-  if (isLoading) return <PageLoading />;
+  if (isLoading || isGalleryLoading) return <PageLoading />;
 
   return (
     <div className="space-y-6">
@@ -158,6 +181,54 @@ export const AboutSettings = memo(function AboutSettings() {
                 placeholder="Learn more"
               />
             </div>
+          </div>
+        </Card>
+
+        <Card delay={0.25}>
+          <h2 className="text-lg font-semibold mb-4">"Biz haqimizda" rasmlari (slider)</h2>
+          <p className="text-sm text-dark-500 mb-4">
+            Bu yerga rasmlarni yuklasangiz, saytning "Biz haqimizda" bo'limidagi slayderda ko'rinadi.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            {galleryImages.length === 0 && (
+              <p className="text-sm text-dark-400">Hozircha rasm yuklanmagan.</p>
+            )}
+            {galleryImages.map((img: AboutImageItem) => (
+              <div key={img.id} className="relative w-32 h-20 rounded-lg overflow-hidden border border-dark-100 bg-dark-50">
+                <img
+                  src={getImageUrl(img.imageUrl) || ''}
+                  alt="About"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => deleteImageMutation.mutate(img.id)}
+                  className="absolute top-1 right-1 w-6 h-6 rounded-full bg-accent-500 text-white text-xs flex items-center justify-center shadow"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4">
+            <label className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-dark-200 text-sm font-medium cursor-pointer hover:bg-dark-50">
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  if (file.size > 5 * 1024 * 1024) {
+                    toast.error('Rasm hajmi 5MB dan oshmasligi kerak');
+                    return;
+                  }
+                  uploadImageMutation.mutate(file);
+                  e.target.value = '';
+                }}
+              />
+              <span>Rasm yuklash</span>
+            </label>
           </div>
         </Card>
 

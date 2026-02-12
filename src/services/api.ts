@@ -538,6 +538,36 @@ export const aboutApi = {
   },
 };
 
+// About slider images (gallery)
+export interface AboutImageItem {
+  id: string;
+  imageUrl: string;
+  order: number;
+}
+
+export const aboutImagesApi = {
+  getAll: async (): Promise<AboutImageItem[]> => {
+    const response = await api.get('/about/images/admin');
+    return response.data.data;
+  },
+
+  upload: async (file: File): Promise<AboutImageItem> => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const response = await api.post('/about/images', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data.data;
+  },
+
+  delete: async (id: string): Promise<void> => {
+    await api.delete(`/about/images/${id}`);
+  },
+};
+
 export const contactApi = {
   get: async (): Promise<ContactSettings> => {
     const response = await api.get('/contact');
